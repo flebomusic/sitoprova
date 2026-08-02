@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flebo - Rock/Indie Alternative</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="social-bar">
+        <a href="https://www.instagram.com/flebo_music/" target="_blank" title="Instagram"><i
+                class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.youtube.com/@FleboMusic" target="_blank" title="YouTube"><i
+                class="fa-brands fa-youtube"></i></a>
+        <a href="https://open.spotify.com/intl-it/artist/0Q9rhWV4EiXxeiMxxt0Vdg?si=TK8IEoUbQVuw-0c8wGY-_Q"
+            target="_blank" title="Spotify"><i class="fa-brands fa-spotify"></i></a>
+        <a href="https://www.tiktok.com/@flebomusic?is_from_webapp=1&sender_device=pc" target="_blank" title="TikTok"><i
+                class="fa-brands fa-tiktok"></i></a>
+        <a href="https://music.apple.com/it/artist/flebo/1876275868" target="_blank" title="Apple Music"><i
+                class="fa-brands fa-apple"></i></a>
+    </div>
+
+    <header class="main-header">
+        <div class="logo-container">
+            <h1 class="artist-name"><span id="typewriter"></span><span class="cursor">_</span></h1>
+        </div>
+        <div class="album-cover-container">
+            <a href="https://open.spotify.com/intl-it/track/11redVoM9yMkaRqtTZC332?si=426ec5426e7745fe" target="_blank"
+                title="Ascolta su Spotify">
+                <img src="foto/copertina.png" alt="Copertina Album" class="album-cover">
+            </a>
+        </div>
+    </header>
+
+    <section class="announcement-section">
+        <h2 class="announcement-text">"SENZA DI ME" ORA SU TUTTE LE PIATTAFORME!</h2>
+    </section>
+
+    <section class="bio-section">
+        <h2 class="section-title">BIO</h2>
+        <p class="bio-text">
+            Sono un artista nel Lazio,indipendente.Spero ti piaccia la mia musica, punto a creare qualcosa che io stesso
+            vorrei ascoltare, e mi auguro che raggiunga qualcuno che possa apprezzarla quanto me.
+        </p>
+    </section>
+
+    <section class="releases-section">
+        <h2 class="section-title">USCITE </h2>
+        <div class="releases-container">
+            <a href="https://open.spotify.com/intl-it/track/11redVoM9yMkaRqtTZC332?si=426ec5426e7745fe" target="_blank"
+                class="release-item">
+                <img src="foto/copertina.png" alt="Singolo 2">
+                <p>Senza di me</p>
+            </a>
+            <a href="https://open.spotify.com/intl-it/track/6Aq96RF8CSwb8anraaN86D?si=b5aa4f5b6e6740b6" target="_blank"
+                class="release-item">
+                <img src="foto/copertina.png" alt="Singolo 1">
+                <p>Weight of the skin</p>
+            </a>
+        </div>
+    </section>
+
+    <section class="gallery-section">
+        <h2 class="section-title">GALLERIA</h2>
+        <div class="gallery-container">
+            <div class="gallery-item">
+                <img src="foto/copertina.png" alt="Foto 1">
+            </div>
+            <div class="gallery-item">
+                <img src="foto/foto_spotify.jpg" alt="Foto 2">
+            </div>
+            <div class="gallery-item">
+                <img src="foto/polaroid.png" alt="Foto 3">
+            </div>
+        </div>
+    </section>
+
+    <div id="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <span class="lightbox-prev">&#10094;</span>
+        <img id="lightbox-img" src="">
+        <span class="lightbox-next">&#10095;</span>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Flebo Music. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const text = "FLEBO";
+        const typewriterElement = document.getElementById("typewriter");
+        let i = 0;
+        let isDeleting = false;
+
+        function typeWriter() {
+            const currentSpeed = isDeleting ? 100 : 250;
+
+            if (!isDeleting && i < text.length) {
+                typewriterElement.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, currentSpeed);
+            } else if (isDeleting && i > 0) {
+                typewriterElement.innerHTML = text.substring(0, i - 1);
+                i--;
+                setTimeout(typeWriter, currentSpeed);
+            } else {
+                isDeleting = !isDeleting;
+                const pause = isDeleting ? 4000 : 1000;
+                setTimeout(typeWriter, pause);
+            }
+        }
+
+        setTimeout(typeWriter, 1000);
+
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const closeBtn = document.querySelector('.lightbox-close');
+        const prevBtn = document.querySelector('.lightbox-prev');
+        const nextBtn = document.querySelector('.lightbox-next');
+        const galleryItems = document.querySelectorAll('.gallery-item img');
+
+        let currentIndex = 0;
+
+        function openLightbox(index) {
+            currentIndex = index;
+            lightboxImg.src = galleryItems[currentIndex].src;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+        }
+
+        function showNext() {
+            currentIndex = (currentIndex + 1) % galleryItems.length;
+            lightboxImg.src = galleryItems[currentIndex].src;
+        }
+
+        function showPrev() {
+            currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+            lightboxImg.src = galleryItems[currentIndex].src;
+        }
+
+        galleryItems.forEach((img, index) => {
+            img.addEventListener('click', () => openLightbox(index));
+        });
+
+        closeBtn.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        nextBtn.addEventListener('click', showNext);
+        prevBtn.addEventListener('click', showPrev);
+
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            if (e.key === 'ArrowRight') showNext();
+            if (e.key === 'ArrowLeft') showPrev();
+            if (e.key === 'Escape') closeLightbox();
+        });
+    </script>
+</body>
+
+</html>
